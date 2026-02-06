@@ -67,11 +67,10 @@ class ActivityPubService
             'User-Agent' => app('user_agent'),
         ];
 
-        // Temporarily disable signature generation for testing
-        // if ($signed) {
-        //     $signature = app(HttpSignatureService::class)->instanceSign($headers, 'GET', $parsedUrl['path'] ?? '/');
-        //     $headers['Signature'] = $signature;
-        // }
+        if ($signed) {
+            $signature = app(HttpSignatureService::class)->instanceSign($headers, 'GET', $parsedUrl['path'] ?? '/');
+            $headers['Signature'] = $signature;
+        }
 
         try {
             $res = Http::withOptions([
